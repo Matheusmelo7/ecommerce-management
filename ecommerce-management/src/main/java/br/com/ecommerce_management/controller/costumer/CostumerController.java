@@ -16,7 +16,7 @@ public class CostumerController {
     private final CostumerService costumerService;
 
     @PostMapping
-    ResponseEntity<CostumerDTO> createCostumer(@RequestBody CostumerDTO costumerDTO){
+    public ResponseEntity<CostumerDTO> createCostumer(@RequestBody CostumerDTO costumerDTO){
         return ResponseEntity.ok(costumerService.createNewCostumer(costumerDTO));
     }
 
