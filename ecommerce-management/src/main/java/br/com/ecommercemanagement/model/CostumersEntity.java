@@ -1,11 +1,8 @@
-package br.com.ecommerce_management.model;
+package br.com.ecommercemanagement.model;
 
-import br.com.ecommerce_management.controller.costumer.CostumerDTO;
+import br.com.ecommercemanagement.controller.costumer.CostumerDTO;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
@@ -14,6 +11,7 @@ import java.util.List;
 @Entity
 @Table(name = "COSTUMERS")
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -50,7 +48,6 @@ public class CostumersEntity {
                 .id(this.idCostumer)
                 .name(this.name)
                 .email(this.email)
-                .pass(this.pass)
                 .phone(this.phone)
                 .createAt(this.createAt)
                 .build();

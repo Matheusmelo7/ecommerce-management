@@ -1,4 +1,4 @@
-package br.com.ecommerce_management.model;
+package br.com.ecommercemanagement.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
