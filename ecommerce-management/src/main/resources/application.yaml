@@ -5,9 +5,21 @@ spring:
     username: sa
     password:
     driverClassName: org.h2.Driver
+  sql.init.mode: always
   jpa:
+    defer-datasource-initialization: true
     hibernate:
       ddl-auto: create
     show-sql: true
   h2:
     console.enabled: true
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: grainandflavor@gmail.com
+    password: 'zicy wrdd dfij dmmz'
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls.enable: true

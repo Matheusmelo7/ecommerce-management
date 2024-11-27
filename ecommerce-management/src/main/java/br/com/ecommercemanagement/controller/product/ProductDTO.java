@@ -1,5 +1,6 @@
-package br.com.ecommerce_management.controller.costumer;
+package br.com.ecommercemanagement.controller.product;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.AllArgsConstructor;
@@ -14,13 +15,14 @@ import java.time.LocalDateTime;
 @Builder
 @Getter
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-public class CostumerDTO {
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class ProductDTO {
 
     private Long id;
     private String name;
-    private String email;
-    private String pass;
-    private LocalDateTime createAt;
-    private String phone;
+    private String description;
+    private Long price;
+    private Long stockQuantity;
+    private LocalDateTime createdAt;
 
 }

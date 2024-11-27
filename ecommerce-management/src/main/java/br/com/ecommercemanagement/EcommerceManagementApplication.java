@@ -1,9 +1,9 @@
-package br.com.ecommerce_management;
+package br.com.ecommercemanagement;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "br.com.ecommercemanagement")
 public class EcommerceManagementApplication {
 
 	public static void main(String[] args) {

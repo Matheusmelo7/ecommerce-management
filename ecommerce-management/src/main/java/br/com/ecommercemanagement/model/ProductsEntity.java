@@ -1,5 +1,6 @@
-package br.com.ecommerce_management.model;
+package br.com.ecommercemanagement.model;
 
+import br.com.ecommercemanagement.controller.product.ProductDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,8 +17,8 @@ import java.time.LocalDateTime;
 public class ProductsEntity {
 
     @Column(name = "ID_PRODUCT")
-    @SequenceGenerator(name = "productSequence", sequenceName = "productSeq", allocationSize = 1)
-    @GeneratedValue(strategy=GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "product_generator")
+    @SequenceGenerator(name = "product_generator", sequenceName = "products_seq", allocationSize = 1)
     @Id
     private Long idProduct;
 
@@ -39,6 +40,18 @@ public class ProductsEntity {
 
 
 
+    public ProductDTO toDTO (){
+        return ProductDTO
+                .builder()
+                .id(this.idProduct)
+                .name(this.name)
+                .description(this.description)
+                .price(this.price)
+                .stockQuantity(this.stockQuantity)
+                .createdAt(this.createdAt)
+                .build();
+
+    }
 
 
 
