@@ -17,7 +17,7 @@ import java.util.List;
 public class OrderCostumerEntity {
 
     @Column(name = "ID_ORDER_COSTUMER")
-    @GeneratedValue(strategy=GenerationType.SEQUENCE)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "orderCostumerSequence")
     @SequenceGenerator(name = "orderCostumerSequence", sequenceName = "orderCostumersSeq", allocationSize = 1)
     @Id
     private Long idOrderCostumer;
@@ -40,5 +40,8 @@ public class OrderCostumerEntity {
 
     @OneToOne
     private PaymentsEntity paymentsEntity;
+
+    @ManyToOne
+    private CostumersEntity costumersEntity;
 
 }
