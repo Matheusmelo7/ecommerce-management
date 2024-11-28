@@ -1,7 +1,9 @@
 package br.com.ecommercemanagement.model;
 
+import br.com.ecommercemanagement.controller.payment.PaymentDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +14,7 @@ import java.time.LocalDateTime;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class PaymentsEntity {
 
     @Column(name = "ID_PAYMENTS")
@@ -35,4 +38,15 @@ public class PaymentsEntity {
     @Column(name = "PAYMENT_TOKEN")
     private String paymentToken;
 
+    @OneToOne
+    private OrderCostumerEntity orderCostumerEntity;
+
+    public PaymentDTO toDTO() {
+        return PaymentDTO.builder()
+                .idPayment(this.idPayments)
+                .paymentMethod(this.paymentMethod)
+                .paymentStatus(this.paymentStatus)
+                .amount(this.amount)
+                .build();
+    }
 }
