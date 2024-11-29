@@ -87,4 +87,7 @@ public class CostumerService {
 
         emailService.sendPasswordRecoveryEmail(email, newPassword);
     }
+
+    public CostumerDTO findById(Long id) {
+        return costumerRepository.findById(id).map(CostumersEntity::toDTO).orElseThrow();}
 }
