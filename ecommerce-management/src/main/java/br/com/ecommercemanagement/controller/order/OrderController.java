@@ -2,6 +2,7 @@ package br.com.ecommercemanagement.controller.order;
 
 import br.com.ecommercemanagement.service.OrderService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +29,27 @@ public class OrderController {
     public ResponseEntity<List<OrderDTO>> findOrdersByIdClient(@PathVariable("id") Long id){
         return ResponseEntity.ok(orderService.getOrderById(id));
     }
+
+    @GetMapping("order/{id}")
+    public ResponseEntity<List<OrderDTO>> findOrderById(@PathVariable("id") Long id){
+        return ResponseEntity.ok(orderService.getOneOrderById(id));
+    }
+
+    @PostMapping("{id}/finalize")
+    public ResponseEntity finalizeOrderClient(@PathVariable("id") Long idOrder,
+                                              @RequestBody OrderDTO orderDTO){
+        orderService.finalizeOrder(orderDTO, idOrder);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
+    @PutMapping("{id}/complete-payment")
+    public ResponseEntity completePaymentOrderClient(@PathVariable("id") Long idOrder){
+        orderService.completePaymentOrder(idOrder);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
+
+
 
 
 

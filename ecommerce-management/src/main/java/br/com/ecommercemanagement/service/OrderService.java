@@ -64,6 +64,33 @@ public class OrderService {
 
     }
 
+    public void finalizeOrder(OrderDTO orderDTO, Long id){
+        var order = orderRepository.findById(id).orElseThrow();
+
+        order.setDeliveryAddress(orderDTO.getDeliveryAddress());
+        order.setStatus("payment_pending");
+
+
+        orderRepository.save(order);
+
+    }
+
+    public void completePaymentOrder(Long id){
+
+        var order = orderRepository.findById(id).orElseThrow();
+        order.setStatus("delivery_pending");
+
+        orderRepository.save(order);
+
+    }
+
+
+    public List<OrderDTO> getOneOrderById(Long id) {
+        return orderRepository.findById(id)
+                .stream()
+                .map(OrderCostumerEntity::toDTO).toList();
+    }
+
     public List<OrderDTO> getOrderById(Long id) {
         return orderRepository.findAllOrderCostumerByCostumersEntityIdCostumer(id)
                 .stream()
