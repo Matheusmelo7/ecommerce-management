@@ -52,6 +52,8 @@ public class OrderCostumerEntity {
         return OrderDTO.builder()
                 .idOrder(this.idOrderCostumer)
                 .orderItemsEntity(this.orderItemsEntity)
+                .deliveryAddress(this.deliveryAddress)
+                .valueTotal(this.total)
                 .status(this.status)
                 .build();
     }

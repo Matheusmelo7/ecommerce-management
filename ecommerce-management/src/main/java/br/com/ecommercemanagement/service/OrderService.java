@@ -15,6 +15,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.DoubleStream;
+import java.util.stream.IntStream;
+import java.util.stream.LongStream;
 
 @Service
 @RequiredArgsConstructor
@@ -70,7 +73,13 @@ public class OrderService {
         order.setDeliveryAddress(orderDTO.getDeliveryAddress());
         order.setStatus("payment_pending");
 
-
+        var total = order
+                .getOrderItemsEntity()
+                        .stream()
+                                .flatMapToLong(orderItemsEntity -> LongStream.of(orderItemsEntity.getQuantity()
+                                                                        * orderItemsEntity.getProductsEntity().getPrice()))
+                .sum();
+        order.setTotal(String.valueOf(total));
         orderRepository.save(order);
 
     }
