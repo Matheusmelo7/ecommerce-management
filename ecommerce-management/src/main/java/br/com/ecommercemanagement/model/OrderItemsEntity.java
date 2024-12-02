@@ -28,7 +28,7 @@ public class OrderItemsEntity {
 
     private Long total;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     @JsonBackReference
     private OrderCostumerEntity orderCostumer;
 

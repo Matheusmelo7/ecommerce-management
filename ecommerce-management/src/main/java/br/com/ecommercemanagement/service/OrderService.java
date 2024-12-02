@@ -9,14 +9,13 @@ import br.com.ecommercemanagement.infrastructure.OrderRepository;
 import br.com.ecommercemanagement.infrastructure.ProductRepository;
 import br.com.ecommercemanagement.model.OrderCostumerEntity;
 import br.com.ecommercemanagement.model.OrderItemsEntity;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.DoubleStream;
-import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 
 @Service
@@ -67,7 +66,7 @@ public class OrderService {
 
     }
 
-    public void finalizeOrder(OrderDTO orderDTO, Long id){
+    public void finalizeOrder(OrderDTO orderDTO, Long id) {
         var order = orderRepository.findById(id).orElseThrow();
 
         order.setDeliveryAddress(orderDTO.getDeliveryAddress());
@@ -75,16 +74,16 @@ public class OrderService {
 
         var total = order
                 .getOrderItemsEntity()
-                        .stream()
-                                .flatMapToLong(orderItemsEntity -> LongStream.of(orderItemsEntity.getQuantity()
-                                                                        * orderItemsEntity.getProductsEntity().getPrice()))
+                .stream()
+                .flatMapToLong(orderItemsEntity -> LongStream.of(orderItemsEntity.getQuantity()
+                        * orderItemsEntity.getProductsEntity().getPrice()))
                 .sum();
         order.setTotal(String.valueOf(total));
         orderRepository.save(order);
 
     }
 
-    public void completePaymentOrder(Long id){
+    public void completePaymentOrder(Long id) {
 
         var order = orderRepository.findById(id).orElseThrow();
         order.setStatus("delivery_pending");
@@ -104,5 +103,12 @@ public class OrderService {
         return orderRepository.findAllOrderCostumerByCostumersEntityIdCostumer(id)
                 .stream()
                 .map(OrderCostumerEntity::toDTO).toList();
+    }
+
+    @Transactional
+    public void deleteOrderItem(Long idOrderItem) {
+
+        orderItemsRepository.deleteItemOrder(idOrderItem);
+
     }
 }

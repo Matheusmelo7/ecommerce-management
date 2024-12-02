@@ -25,6 +25,13 @@ public class OrderController {
         return ResponseEntity.ok(orderService.createOrderItem(orderItemDTO));
     }
 
+
+    @DeleteMapping("items/{id}/delete")
+    public ResponseEntity<OrderDTO> deleteOrderItem(@PathVariable("id") Long id){
+        orderService.deleteOrderItem(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
     @GetMapping("costumer/{id}")
     public ResponseEntity<List<OrderDTO>> findOrdersByIdClient(@PathVariable("id") Long id){
         return ResponseEntity.ok(orderService.getOrderById(id));
