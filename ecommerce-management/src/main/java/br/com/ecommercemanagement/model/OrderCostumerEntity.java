@@ -1,10 +1,11 @@
 package br.com.ecommercemanagement.model;
 
+import br.com.ecommercemanagement.controller.order.OrderDTO;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.query.Order;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -14,6 +15,8 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
+@Builder
 public class OrderCostumerEntity {
 
     @Column(name = "ID_ORDER_COSTUMER")
@@ -35,7 +38,8 @@ public class OrderCostumerEntity {
     @Column(name = "DELIVERY_ADDRESS")
     private String deliveryAddress;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<OrderItemsEntity> orderItemsEntity;
 
     @OneToOne
@@ -44,4 +48,13 @@ public class OrderCostumerEntity {
     @ManyToOne
     private CostumersEntity costumersEntity;
 
+    public OrderDTO toDTO() {
+        return OrderDTO.builder()
+                .idOrder(this.idOrderCostumer)
+                .orderItemsEntity(this.orderItemsEntity)
+                .deliveryAddress(this.deliveryAddress)
+                .valueTotal(this.total)
+                .status(this.status)
+                .build();
+    }
 }

@@ -12,6 +12,7 @@ import java.util.List;
 @Table(name = "COSTUMERS")
 @Getter
 @Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -39,7 +40,7 @@ public class CostumersEntity {
     @CreationTimestamp
     private LocalDateTime createAt;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.LAZY)
     private List<OrderCostumerEntity> orderCostumerEntity;
 
 

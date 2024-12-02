@@ -5,6 +5,7 @@ import br.com.ecommercemanagement.exception.BusinessException;
 import br.com.ecommercemanagement.infrastructure.CostumerRepository;
 import br.com.ecommercemanagement.model.CostumersEntity;
 import br.com.ecommercemanagement.utils.JwtUtil;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -35,9 +36,6 @@ public class CostumerService {
         return costumerRepository.save(entity).toDTO();
     }
 
-    public CostumerDTO findCostumerByID(Long id){
-        return costumerRepository.findById(id).map(CostumersEntity::toDTO).orElseThrow(() -> new BusinessException(COSTUMER_NOT_FOUND_TO_CODE, HttpStatus.NOT_FOUND));
-    }
 
     public CostumerDTO updateCostumer(CostumerDTO costumerDTO, Long id) {
 
@@ -89,4 +87,7 @@ public class CostumerService {
 
         emailService.sendPasswordRecoveryEmail(email, newPassword);
     }
+
+    public CostumerDTO findById(Long id) {
+        return costumerRepository.findById(id).map(CostumersEntity::toDTO).orElseThrow();}
 }
